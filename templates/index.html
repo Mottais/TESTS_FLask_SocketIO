@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask-SocketIO Example</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+            var valueDisplay = document.getElementById('value');
+            var incrementButton = document.getElementById('increment');
+
+            // Recevoir la mise à jour de la valeur depuis le serveur
+            socket.on('update_value', function(data) {
+                valueDisplay.innerHTML = data.value;
+            });
+
+            // Envoyer un événement d'incrémentation au serveur
+            incrementButton.addEventListener('click', function() {
+                socket.emit('increment');
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Valeur: <span id="value">0</span></h1>
+    <button id="increment">Incrémenter</button>
+</body>
+</html>
